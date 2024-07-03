@@ -1,0 +1,39 @@
+.cartBox {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cartItem {
+    width: 50vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.cartInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20vw;
+}
+
+.cartFun {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 2%;
+    padding: 2%;
+}
+
+.cartFun a {
+    margin: 2%;
+}
+
+.cartFun p {
+    font-size: 110%;
+    font-weight: 500;
+}

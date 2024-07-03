@@ -1,0 +1,16 @@
+{% extends "menu/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'menu/menu-detail.css' %}" />
+{% endblock head%}
+{% block content %}
+<div class="mditem">
+  <img src="{{ menu.image.url }}" class="mdimage" alt="{{ menu.title }}" />
+  <div class="card-body">
+    <h1 class="mdtitle">{{ menu.title }}</h1>
+    <p class="desc">{{ menu.content }}</p>
+    <p class="price"><strong>₹ {{ menu.price }}</strong></p>
+    <a href="{% url 'add-to-cart' menu.pk %}" class="btn btn-primary">Add to Cart</a>
+  </div>
+</div>
+{% endblock content %}

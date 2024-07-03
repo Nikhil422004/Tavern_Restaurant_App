@@ -1,0 +1,20 @@
+{% extends "menu/base.html" %} {% load crispy_forms_tags %}{% block content %}
+<h1 class="menuTitle">Menu</h1>
+<form method="GET" action="{% url 'menu' %}" class="searchForm">
+  <input type="text" name="query" placeholder="Search for menu items..." class="searchInput" autocomplete="off" />
+  <button type="submit" class="searchButton">Search</button>
+</form>
+<div class="menuPage">
+  {% for menu in menuItems %} {% url 'menu-detail' menu.pk as menu_detail_url %}
+  <div class="menuCard" onclick="window.location.href='{{ menu_detail_url }}'" style="cursor: pointer">
+    <img src="{{menu.image.url}}" alt="{{menu.title}}" class="cardImage" />
+    <div class="cardBody">
+      <h5 class="cardTitle">{{menu.title}}</h5>
+      <p class="card-text"><strong>₹ {{menu.price}}</strong></p>
+      <a href="{% url 'add-to-cart' menu.pk %}" class="btn btn-primary" onclick="event.stopPropagation()">Add to
+        Cart</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}
