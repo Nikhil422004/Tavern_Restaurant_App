@@ -11,6 +11,7 @@ class Menu(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(default="menu/default.jpg", upload_to="menu")
+    qty = models.IntegerField(null=False, blank=False, default="1")
 
     def __str__(self):
         return self.title
@@ -27,3 +28,13 @@ class Menu(models.Model):
             output_size = (500, 500)
             img = img.resize(output_size, Image.LANCZOS)
             img.save(self.image.path)
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    menuQty = models.IntegerField(null=False, blank=False)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str((str(self.user), str(self.menu)))
