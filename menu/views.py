@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View, ListView, DetailView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.db.models import Q
 from .forms import SearchForm
 from .models import Menu
@@ -42,6 +43,7 @@ class AddToCartView(View):
         cart = request.session.get('cart', [])
         cart.append({'id': menuItem.id, 'title': menuItem.title, 'price': str(menuItem.price)})
         request.session['cart'] = cart
+        messages.success(request, f'Item has been added to cart')
 
         return redirect('menu')
 
@@ -59,11 +61,13 @@ class RemoveFromCartView(View):
                 del cart[index]
                 break
         request.session['cart'] = cart
+        messages.warning(request, f'Item has been removed from cart')
         return redirect('view-cart')
     
 class ClearCartView(View):
     def get(self, request):
         request.session['cart'] = []
+        messages.error(request, f'Your cart has been cleared.')
         return redirect('view-cart')
 
 
