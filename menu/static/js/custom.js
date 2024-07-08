@@ -47,4 +47,48 @@ $(document).ready(function () {
       },
     });
   });
+
+  $(".changeQty").click(function (e) {
+    e.preventDefault();
+
+    var menuId = $(this).closest(".menuCard").find(".menuId").val();
+    var menuQty = $(this).closest(".menuCard").find(".qty-input").val();
+    var token = $("input[name=csrfmiddlewaretoken]").val();
+
+    $.ajax({
+      type: "post",
+      url: "/update-cart/",
+      data: {
+        menuId: menuId,
+        menuQty: menuQty,
+        csrfmiddlewaretoken: token,
+      },
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (response) {
+        console.log("Error: ", response);
+      },
+    });
+  });
+
+  $(".remBtn").click(function (e) {
+    e.preventDefault();
+
+    var menuId = $(this).closest(".menuCard").find(".menuId").val();
+    var token = $("input[name=csrfmiddlewaretoken]").val();
+
+    $.ajax({
+      type: "POST",
+      url: "/remove-item/",
+      data: {
+        menuId: menuId,
+        csrfmiddlewaretoken: token,
+      },
+      success: function (response) {
+        console.log(response);
+        location.reload();
+      },
+    });
+  });
 });

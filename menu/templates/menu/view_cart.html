@@ -1,20 +1,27 @@
-{% extends "menu/base.html" %} {% block content %}
+{% extends "menu/base.html" %} 
+{% load static %}
+{% block content %}
 <h1 class="menuTitle">Your Cart</h1>
 {% if cart %}
 <ul class="cartBox">
   {% for item in cart %}
-  <li class="cartItem">
-    <div class="cartInfo"><span>{{ item.title }}</span> <span> -- </span></div>
+  <li class="cartItem menuCard">
+    <div class="cartInfo"><span>{{ item.menu }}</span> <span> -- </span></div>
     <div class="cartInfo">
-      <span>₹ {{ item.price }}</span>
-      <form
-        action="{% url 'remove-from-cart' item.id %}"
-        method="post"
-        style="display: inline"
-      >
+      <span>₹ {{ item.menu.price }}</span>
+       <div class="cartBtns">
         {% csrf_token %}
-        <button type="submit" class="btn btn-link text-danger">Remove</button>
-      </form>
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <input type="hidden" value="{{ item.menu.pk }}" class="menuId">
+        <label for="Quantity">Quantity</label>
+        <div class="qtyBtnGroup">
+          <button class="input-group-text changeQty decrement-btn">-</button>
+          <input type="text" name="Quantity" value={{item.menuQty}} class="form-control qty-input text-center">
+          <button class="input-group-text  changeQty increment-btn">+</button>
+        </div>
+        <div class="addBtnGroup">
+          <button type="button" class="btn btn-link text-danger remBtn">Remove</button>
+        </div>
     </div>
   </li>
   {% endfor %}

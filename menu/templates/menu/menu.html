@@ -1,34 +1,60 @@
-{% extends "menu/base.html" %}
-{% load static %}
-{% load crispy_forms_tags %}{% block content %}
+{% extends "menu/base.html" %} {% load static %} {% load crispy_forms_tags
+%}{%block content %}
 <h1 class="menuTitle">Menu</h1>
 <form method="GET" action="{% url 'menu' %}" class="searchForm">
-  <input type="text" name="query" placeholder="Search for menu items..." class="searchInput" autocomplete="off" />
+  <input
+    type="text"
+    name="query"
+    placeholder="Search for menu items..."
+    class="searchInput"
+    autocomplete="off"
+  />
   <button type="submit" class="searchButton">Search</button>
 </form>
 <div class="menuPage">
   {% for menu in menuItems %} {% url 'menu-detail' menu.pk as menu_detail_url %}
   <div class="menuCard">
-    <img src="{{menu.image.url}}" alt="{{menu.title}}" class="cardImage"
-      onclick="window.location.href='{{ menu_detail_url }}'" style="cursor: pointer" />
+    <img
+      src="{{menu.image.url}}"
+      alt="{{menu.title}}"
+      class="cardImage"
+      onclick="window.location.href='{{ menu_detail_url }}'"
+      style="cursor: pointer"
+    />
     <div class="cardBody">
-      <h5 class="cardTitle" onclick="window.location.href='{{ menu_detail_url }}'" style="cursor: pointer">
-        {{menu.title}}</h5>
+      <h5
+        class="cardTitle"
+        onclick="window.location.href='{{ menu_detail_url }}'"
+        style="cursor: pointer"
+      >
+        {{menu.title}}
+      </h5>
       <p class="card-text"><strong>₹ {{menu.price}}</strong></p>
 
       <div class="cartBtns">
         {% csrf_token %}
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <input type="hidden" value="{{ menu.pk }}" class="menuId">
+        <input
+          type="hidden"
+          name="csrfmiddlewaretoken"
+          value="{{ csrf_token }}"
+        />
+        <input type="hidden" value="{{ menu.pk }}" class="menuId" />
         <label for="Quantity">Quantity</label>
         <div class="qtyBtnGroup">
-          <button class="input-group-text decrement-btn">-</button>
-          <input type="text" name="Quantity" value="1" class="form-control qty-input text-center">
-          <button class="input-group-text increment-btn">+</button>
+          <button class="input-group-text changeQty decrement-btn">-</button>
+          <input
+            type="text"
+            name="Quantity"
+            value="1"
+            class="form-control qty-input text-center"
+          />
+          <button class="input-group-text changeQty increment-btn">+</button>
         </div>
         <div class="addBtnGroup">
           {% if menu.qty > 0 %}
-          <button type="button" class="btn btn-primary addtoCart">Add to Cart</button>
+          <button type="button" class="btn btn-primary addtoCart">
+            Add to Cart
+          </button>
           {% endif %}
         </div>
       </div>
@@ -36,7 +62,4 @@
   </div>
   {% endfor %}
 </div>
-{% endblock content %}
-{% block script %}
-
-{% endblock script %}
+{% endblock content %} {% block script %} {% endblock script %}

@@ -22,3 +22,34 @@ def addtocart(request):
             return JsonResponse({'status': 'No such Item'})
     
     return redirect('/menu')
+
+def viewcart(request):
+    cart = Cart.objects.filter(user=request.user)
+    context = {
+        'cart':cart
+    }
+    return render(request, 'menu/view_cart.html', context)
+
+def updatecart(request):
+    if request.method == 'POST':
+        menuId = int(request.POST.get('menuId'))
+        menuCheck = Menu.objects.get(pk=menuId)
+        cart = Cart.objects.get(user=request.user.id, menu=menuCheck)
+        if(cart):
+            menuQty = int(request.POST.get('menuQty'))
+            cart.menuQty = menuQty
+            cart.save()
+            return JsonResponse({'status': 'Updated successfully'})
+    return redirect('update-cart/')
+        
+
+def removeitem(request):
+    if request.method == 'POST':
+        menuId = int(request.POST.get('menuId'))
+        menuCheck = Menu.objects.get(pk=menuId)
+        cart = Cart.objects.get(user=request.user.id, menu=menuCheck)
+        if(cart):
+            cart.delete()
+            messages.error(request, f'Item has been removed from cart')
+            return JsonResponse({'status': 'Removed Item'})
+    return redirect('remove-item/')
