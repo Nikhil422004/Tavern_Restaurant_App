@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.utils.dateparse import parse_datetime
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+import json
 
 # Create your views here.
 
@@ -38,9 +40,20 @@ def profile(request):
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
+    orders = json.loads(request.user.profile.orders)
+    for order in orders:
+        order['date_posted'] = parse_datetime(order['date_posted'])
+
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'orders': orders,
     }
 
     return render(request, 'users/profile.html', context)
+
+def delete_order(request, order_id):
+    if request.method == 'POST':
+        request.user.profile.delete_order(order_id)
+        messages.success(request, 'Order has been deleted.')
+        return redirect('profile')

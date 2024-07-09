@@ -21,5 +21,36 @@
       <button class="btn btn-outline-info" type="submit">Update</button>
     </div>
   </form>
+
+  <h2>Past Orders</h2>
+  {% if orders %}
+  <ul class="list-group">
+    {% for order in orders %}
+    <li class="list-group-item">
+      <h5>Order ID: {{ order.order_id }}</h5>
+      <p>Date: {{ order.date_posted|date:"g:i A, j F Y" }}</p>
+      <p>Total Cost: ${{ order.total_cost }}</p>
+      <h6>Items:</h6>
+      <ul>
+        {% for item in order.items %}
+        <li>{{ item.quantity }} x {{ item.title }} - ${{ item.price }} each</li>
+        {% endfor %}
+      </ul>
+      <form
+        action="{% url 'delete-order' order.order_id %}"
+        method="post"
+        style="display: inline"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm">
+          Delete Order
+        </button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>You have no past orders.</p>
+  {% endif %}
 </div>
 {% endblock content %}

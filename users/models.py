@@ -29,7 +29,6 @@ class Profile(models.Model):
         orders = json.loads(self.orders)
         order_uuid = shortuuid.uuid()
         
-        # Create a new order
         new_order = {
             'order_id': order_uuid,
             'items': [],
@@ -37,7 +36,6 @@ class Profile(models.Model):
             'date_posted': timezone.now().isoformat()
         }
 
-        # Iterate through the cart items
         for cart_item in cart:
             menu = cart_item.menu
             quantity = cart_item.menuQty
@@ -52,10 +50,14 @@ class Profile(models.Model):
             new_order['items'].append(item)
             new_order['total_cost'] += float(menu.price) * quantity
 
-        # Append the new order to the orders list
         orders.append(new_order)
         
-        # Save the updated orders list back to the orders field
         self.orders = json.dumps(orders)
         self.save()
         return new_order 
+    
+    def delete_order(self, order_id):
+        orders = json.loads(self.orders)
+        orders = [order for order in orders if order['order_id'] != order_id]
+        self.orders = json.dumps(orders)
+        self.save()
