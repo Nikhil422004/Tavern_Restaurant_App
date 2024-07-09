@@ -12,7 +12,7 @@ urlpatterns = [
     path('view-cart/', cart.viewcart,  name='view-cart'),
     path('update-cart/', cart.updatecart,  name='update-cart'),
     path('remove-item/', cart.removeitem,  name='remove-item'),
-    path('', cart.clearcart, name='clear-cart'),
+    path('/', cart.clearcart, name='clear-cart'),
     path('confirm-order/', cart.confirmorder, name='confirm-order'),
     path('confirmation-page/<str:order_id>/', cart.confirmation_page, name='confirmation-page'),
 ]

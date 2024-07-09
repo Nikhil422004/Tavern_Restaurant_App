@@ -71,7 +71,8 @@ def removeitem(request):
 def clearcart(request):
     cart = Cart.objects.filter(user=request.user)
     cart.delete()
-    return redirect('view-cart/')
+    messages.success(request, "Cart cleared successfully!")
+    return redirect('menu')
 
 
 def confirmorder(request):

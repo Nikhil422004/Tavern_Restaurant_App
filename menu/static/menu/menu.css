@@ -86,16 +86,52 @@
     color: white;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1450px) {
+    .menuPage {
+        margin: auto -5%;
+    }
+}
+
+@media (max-width: 1020px) {
+    .menuPage {
+        margin: auto -4%;
+    }
+}
+
+
+@media (max-width: 995px) {
     .menuCard {
         width: 40%;
         margin: 3%;
     }
+
+    .menuPage {
+        width: 65vw;
+    }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 660px) {
     .menuCard {
         width: 70%;
         margin: 3%;
+    }
+
+    .cartItems h3 {
+        font-size: 100%;
+    }
+
+    .cartItems {
+        width: 30%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .cartItems {
+        display: none;
+    }
+
+    .menuPage {
+        margin: auto;
     }
 }
