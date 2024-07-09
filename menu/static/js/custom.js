@@ -64,6 +64,7 @@ $(document).ready(function () {
         csrfmiddlewaretoken: token,
       },
       success: function (response) {
+        $(".total-cost").text(response.total_cost);
         console.log(response);
       },
       error: function (response) {
@@ -86,6 +87,7 @@ $(document).ready(function () {
         csrfmiddlewaretoken: token,
       },
       success: function (response) {
+        $(".total-cost").text(response.total_cost);
         console.log(response);
         location.reload();
       },

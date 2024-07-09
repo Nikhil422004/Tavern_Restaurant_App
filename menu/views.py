@@ -37,39 +37,5 @@ class MenuDetailView(LoginRequiredMixin, DetailView):
     template_name = "menu/menu_detail.html"
     context_object_name = "menu"
 
-class AddToCartView(View):
-    def get(self, request, pk):
-        menuItem = get_object_or_404(Menu, pk=pk)
-        cart = request.session.get('cart', [])
-        cart.append({'id': menuItem.id, 'title': menuItem.title, 'price': str(menuItem.price)})
-        request.session['cart'] = cart
-        messages.success(request, f'Item has been added to cart')
-
-        return redirect('menu')
-
-class ViewCartView(View):
-    def get(self, request):
-        cart = request.session.get('cart',[])
-        total_cost = sum(float(item['price']) for item in cart)
-        return render(request, 'menu/view_cart.html', {'cart':cart, 'total_cost':total_cost})
-
-class RemoveFromCartView(View):
-    def post(self, request, pk):
-        cart = request.session.get('cart', [])
-        for index, item in enumerate(cart):
-            if item['id'] == pk:
-                del cart[index]
-                break
-        request.session['cart'] = cart
-        messages.warning(request, f'Item has been removed from cart')
-        return redirect('view-cart')
-    
-class ClearCartView(View):
-    def get(self, request):
-        request.session['cart'] = []
-        messages.error(request, f'Your cart has been cleared.')
-        return redirect('view-cart')
-
-
 def about(request):
     return render(request, 'menu/about.html', {'title': 'About'})

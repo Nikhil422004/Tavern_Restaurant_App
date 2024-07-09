@@ -11,7 +11,6 @@ class Menu(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(default="menu/default.jpg", upload_to="menu")
-    qty = models.IntegerField(null=False, blank=False, default="1")
 
     def __str__(self):
         return self.title

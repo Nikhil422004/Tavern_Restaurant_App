@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.http.response import JsonResponse
 from menu.models import Menu, Cart
+from users.models import Profile
 
 def addtocart(request):
     if request.method == 'POST':
@@ -25,8 +26,11 @@ def addtocart(request):
 
 def viewcart(request):
     cart = Cart.objects.filter(user=request.user)
+    cart_items = Cart.objects.filter(user=request.user)
+    total_cost = sum(item.menu.price * item.menuQty for item in cart_items)
     context = {
-        'cart':cart
+        'cart':cart,
+        'total_cost':total_cost
     }
     return render(request, 'menu/view_cart.html', context)
 
@@ -39,7 +43,11 @@ def updatecart(request):
             menuQty = int(request.POST.get('menuQty'))
             cart.menuQty = menuQty
             cart.save()
-            return JsonResponse({'status': 'Updated successfully'})
+
+            cart_items = Cart.objects.filter(user=request.user)
+            total_cost = sum(item.menu.price * item.menuQty for item in cart_items)
+
+            return JsonResponse({'status': 'Updated successfully', 'total_cost': total_cost})
     return redirect('update-cart/')
         
 
@@ -51,5 +59,26 @@ def removeitem(request):
         if(cart):
             cart.delete()
             messages.error(request, f'Item has been removed from cart')
-            return JsonResponse({'status': 'Removed Item'})
+
+            cart_items = Cart.objects.filter(user=request.user)
+            total_cost = sum(item.menu.price * item.menuQty for item in cart_items)
+
+            return JsonResponse({'status': 'Removed Item', 'total_cost': total_cost})
     return redirect('remove-item/')
+
+def clearcart(request):
+    cart = Cart.objects.filter(user=request.user)
+    cart.delete()
+    return redirect('view-cart/')
+
+
+def confirmorder(request):
+    cart = Cart.objects.filter(user=request.user)
+    if request.method == 'POST':
+        new_order = Profile.add_order(cart)
+        cart.delete()
+
+        context = {
+            'order': new_order
+        }
+        return render(request, 'menu/confirmation.html', context)
