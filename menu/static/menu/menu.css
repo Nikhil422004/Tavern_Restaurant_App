@@ -12,6 +12,9 @@
     margin-right: -15%;
     padding: 2%;
     border-radius: 5px;
+    position: fixed;
+    top: 35%;
+    right: 20%;
 }
 
 .cartItem {
@@ -21,10 +24,6 @@
     align-items: center;
 }
 
-.menuContain {
-    display: flex;
-    justify-content: space-between;
-}
 
 .menuTitle {
     margin-bottom: 5%;
