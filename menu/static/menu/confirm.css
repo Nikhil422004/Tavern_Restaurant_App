@@ -1,0 +1,13 @@
+.bill {
+    max-width: 30vw;
+    margin: auto;
+}
+
+li {
+    margin: 2%;
+    list-style: none;
+}
+
+.menu {
+    margin: 5%;
+}

@@ -1,20 +1,28 @@
-{% extends "menu/base.html" %} {% block head %}
+{% extends "menu/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'menu/confirm.css' %}">
 <title>Tavern | Confirmation</title>
 {% endblock head%} {% block content %}
-<h1>Order Confirmation</h1>
-<p>Your order has been confirmed successfully!</p>
+<div class="bill">
 
-<h2>Order Details</h2>
-<p>Order ID: {{ order.order_id }}</p>
-<p>Date: {{ order.date_posted|date:"g:i A, j F Y" }}</p>
-<p>Total Cost: ₹{{ order.total_cost }}</p>
+  <h1>Order Confirmation</h1>
+  <p>Your order has been confirmed successfully!</p>
 
-<h3>Items:</h3>
-<ul>
-  {% for item in order.items %}
-  <li>{{ item.quantity }} x {{ item.title }} - ₹{{ item.price }} each</li>
-  {% endfor %}
-</ul>
+  <h2>Order Details</h2>
+  <div class="details">
+    <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+    <p><strong>Date:</strong> {{ order.date_posted|date:"g:i A, j F Y" }}</p>
+    <p><strong>Total Cost:</strong> ₹{{ order.total_cost }}</p>
+  </div>
 
-<a href="{% url 'menu' %}" class="btn btn-primary">Go to Menu</a>
+  <h3>Items:</h3>
+  <ul>
+    {% for item in order.items %}
+    <li>{{ item.quantity }} x {{ item.title }} - ₹{{ item.price }} each</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'menu' %}" class="btn btn-primary menu">Go to Menu</a>
+</div>
 {% endblock content %}

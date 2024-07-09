@@ -3,10 +3,7 @@
 {% endblock head%} {% load crispy_forms_tags %} {% block content %}
 <div class="content-section">
   <div class="media">
-    <img
-      class="rounded-circle account-img"
-      src="{{ user.profile.image.url }}"
-    />
+    <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" />
     <div class="media-body">
       <h2 class="account-heading">{{ user.username }}</h2>
       <p class="text-secondary">{{ user.email }}</p>
@@ -24,11 +21,11 @@
     </div>
   </form>
 
-  <h2>Past Orders</h2>
+  <h2 style="margin-top: 7%; text-decoration: underline; text-align: center;">Past Orders</h2>
   {% if orders %}
   <ul class="list-group">
     {% for order in orders %}
-    <li class="list-group-item">
+    <li class="list-group-item" style="margin: 0.5%;">
       <h5>Order ID: {{ order.order_id }}</h5>
       <p>Date: {{ order.date_posted|date:"g:i A, j F Y" }}</p>
       <p>Total Cost: ${{ order.total_cost }}</p>
@@ -38,13 +35,9 @@
         <li>{{ item.quantity }} x {{ item.title }} - ${{ item.price }} each</li>
         {% endfor %}
       </ul>
-      <form
-        action="{% url 'delete-order' order.order_id %}"
-        method="post"
-        style="display: inline"
-      >
+      <form action="{% url 'delete-order' order.order_id %}" method="post" style="display: inline">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger btn-sm">
+        <button type="submit" class="btn btn-danger btn-sm" style="margin: 5%;">
           Delete Order
         </button>
       </form>
