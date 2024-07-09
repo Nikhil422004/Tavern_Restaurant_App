@@ -24,14 +24,11 @@
     />
 
     <link rel="stylesheet" href="{% static 'menu/main.css' %}" />
-    <link rel="stylesheet" href="{% static 'menu/menu.css' %}" />
     <link rel="stylesheet" href="{% static 'menu/cart.css' %}" />
     <link rel="stylesheet" href="{% static 'menu/home.css' %}" />
 
     {% block head %}{% endblock %} {% if title %}
     <title>Tavern | {{ title }}</title>
-    {% else %}
-    <title>Tavern | Order Now</title>
     {% endif %}
   </head>
 

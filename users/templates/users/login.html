@@ -1,4 +1,6 @@
-{% extends "menu/base.html" %} {% load crispy_forms_tags %} {% block content %}
+{% extends "menu/base.html" %} {% block head %}
+<title>Tavern | Login</title>
+{% endblock head%} {% load crispy_forms_tags %} {% block content %}
 <div class="content-section">
   <form action="" method="post">
     {% csrf_token %}

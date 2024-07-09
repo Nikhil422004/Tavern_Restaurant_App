@@ -1,11 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View, ListView, DetailView
-from django.views.generic.edit import FormMixin
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
 from django.db.models import Q
 from .forms import SearchForm
-from .models import Menu
+from .models import Menu, Cart
 
 # Create your views here.
 def home(request):
@@ -30,6 +28,8 @@ class MenuListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         form = SearchForm(self.request.GET or None)
         context['form'] = form
+        cart_items = Cart.objects.filter(user=self.request.user)
+        context['cartItems'] = cart_items
         return context
 
 class MenuDetailView(LoginRequiredMixin, DetailView):
