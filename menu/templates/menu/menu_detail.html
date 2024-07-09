@@ -4,13 +4,36 @@
 {% endblock head%} {% block content %}
 <div class="mditem">
   <img src="{{ menu.image.url }}" class="mdimage" alt="{{ menu.title }}" />
-  <div class="card-body">
+  <div class="card-body menuCard">
     <h1 class="mdtitle">{{ menu.title }}</h1>
     <p class="desc">{{ menu.content }}</p>
     <p class="price"><strong>₹ {{ menu.price }}</strong></p>
-    <a href="{% url 'add-to-cart' menu.pk %}" class="btn btn-primary"
-      >Add to Cart</a
-    >
+
+    <div class="cartBtns">
+      {% csrf_token %}
+      <input
+        type="hidden"
+        name="csrfmiddlewaretoken"
+        value="{{ csrf_token }}"
+      />
+      <input type="hidden" value="{{ menu.pk }}" class="menuId" />
+      <label for="Quantity"></label>
+      <div class="qtyBtnGroup">
+        <button class="input-group-text changeQty decrement-btn">-</button>
+        <input
+          type="text"
+          name="Quantity"
+          value="1"
+          class="form-control qty-input text-center"
+        />
+        <button class="input-group-text changeQty increment-btn">+</button>
+      </div>
+      <div class="addBtnGroup">
+        <button type="button" class="btn btn-primary addtoCart">
+          Add to Cart
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock content %}
