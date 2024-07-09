@@ -1,8 +1,0 @@
-{% extends "menu/base.html" %}
-{% load static %}
-{% block head %}
-<link rel="stylesheet" href="{% static 'menu/confirmation.css' %}" />
-{% endblock head%}
-{% block content %}
-<h1>Confirmed</h1>
-{% endblock content %}

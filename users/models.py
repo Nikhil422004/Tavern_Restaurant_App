@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from PIL import Image
 import json
-import uuid
+import shortuuid
 
 # Create your models here.
 class Profile(models.Model):
@@ -27,7 +27,7 @@ class Profile(models.Model):
 
     def add_order(self, cart):
         orders = json.loads(self.orders)
-        order_uuid = str(uuid.uuid4())
+        order_uuid = shortuuid.uuid()
         
         # Create a new order
         new_order = {

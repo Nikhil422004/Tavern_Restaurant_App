@@ -75,10 +75,12 @@ def clearcart(request):
 def confirmorder(request):
     cart = Cart.objects.filter(user=request.user)
     if request.method == 'POST':
-        new_order = Profile.add_order(cart)
+        new_order = request.user.profile.add_order(cart)
         cart.delete()
 
-        context = {
-            'order': new_order
-        }
-        return render(request, 'menu/confirmation.html', context)
+        messages.success(request, "Order confirmed successfully!")
+        return redirect('confirmation-page') 
+    
+
+def confirmation_page(request):
+    return render(request, 'menu/confirmation.html')
