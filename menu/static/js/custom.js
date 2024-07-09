@@ -69,7 +69,7 @@ $(document).ready(function () {
         menuCard
           .closest(".cartItem")
           .find(".item-cost")
-          .text(response.item_cost);
+          .text("₹" + response.item_cost);
         console.log(response);
       },
       error: function (response) {
