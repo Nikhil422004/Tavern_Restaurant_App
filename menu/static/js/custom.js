@@ -51,8 +51,9 @@ $(document).ready(function () {
   $(".changeQty").click(function (e) {
     e.preventDefault();
 
-    var menuId = $(this).closest(".menuCard").find(".menuId").val();
-    var menuQty = $(this).closest(".menuCard").find(".qty-input").val();
+    var menuCard = $(this).closest(".menuCard");
+    var menuId = menuCard.closest(".menuCard").find(".menuId").val();
+    var menuQty = menuCard.closest(".menuCard").find(".qty-input").val();
     var token = $("input[name=csrfmiddlewaretoken]").val();
 
     $.ajax({
@@ -65,6 +66,10 @@ $(document).ready(function () {
       },
       success: function (response) {
         $(".total-cost").text(response.total_cost);
+        menuCard
+          .closest(".cartItem")
+          .find(".item-cost")
+          .text(response.item_cost);
         console.log(response);
       },
       error: function (response) {

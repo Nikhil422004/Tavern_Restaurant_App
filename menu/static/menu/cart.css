@@ -1,3 +1,25 @@
+.qtyBtnGroup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+}
+
+.decrement-btn,
+.qty-input,
+.increment-btn {
+    width: 20%;
+    text-align: center;
+}
+
+.input-group-text {
+    justify-content: center;
+}
+
+.menuTitle {
+    text-align: center;
+}
+
 .cartBox {
     display: flex;
     justify-content: center;

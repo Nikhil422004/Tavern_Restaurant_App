@@ -43,12 +43,13 @@ def updatecart(request):
         if(cart):
             menuQty = int(request.POST.get('menuQty'))
             cart.menuQty = menuQty
+            item_cost = menuQty*cart.menu.price
             cart.save()
 
             cart_items = Cart.objects.filter(user=request.user)
             total_cost = sum(item.menu.price * item.menuQty for item in cart_items)
 
-            return JsonResponse({'status': 'Updated successfully', 'total_cost': total_cost})
+            return JsonResponse({'status': 'Updated successfully', 'total_cost': total_cost, 'item_cost':item_cost})
     return redirect('update-cart/')
         
 
