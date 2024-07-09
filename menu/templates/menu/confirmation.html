@@ -1,6 +1,18 @@
-{% extends "menu/base.html" %}
-{% block content %}
+{% extends "menu/base.html" %} {% block content %}
 <h1>Order Confirmation</h1>
 <p>Your order has been confirmed successfully!</p>
+
+<h2>Order Details</h2>
+<p>Order ID: {{ order.order_id }}</p>
+<p>Date: {{ order.date_posted|date:"g:i A, j F Y" }}</p>
+<p>Total Cost: ₹{{ order.total_cost }}</p>
+
+<h3>Items:</h3>
+<ul>
+  {% for item in order.items %}
+  <li>{{ item.quantity }} x {{ item.title }} - ₹{{ item.price }} each</li>
+  {% endfor %}
+</ul>
+
 <a href="{% url 'menu' %}" class="btn btn-primary">Go to Menu</a>
 {% endblock content %}

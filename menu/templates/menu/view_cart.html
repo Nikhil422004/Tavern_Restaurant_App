@@ -28,7 +28,7 @@
 </ul>
 <div class="cartFun">
   <p><strong>Total Cost: </strong> ₹ <span class="total-cost">{{ total_cost }}</span></p>
-  <form method="POST" action="{% url 'confirmation' %}">
+  <form method="POST" action="{% url 'confirm-order' %}">
     {% csrf_token %}
     <button type="submit" class="btn btn-primary">Confirm Order</button>
   </form>

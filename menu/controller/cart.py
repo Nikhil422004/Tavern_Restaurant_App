@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.http.response import JsonResponse
+from django.utils.dateparse import parse_datetime
 from menu.models import Menu, Cart
-from users.models import Profile
+import json
 
 def addtocart(request):
     if request.method == 'POST':
@@ -79,8 +80,14 @@ def confirmorder(request):
         cart.delete()
 
         messages.success(request, "Order confirmed successfully!")
-        return redirect('confirmation-page') 
-    
+        return redirect('confirmation-page', order_id=new_order['order_id'])
 
-def confirmation_page(request):
-    return render(request, 'menu/confirmation.html')
+def confirmation_page(request, order_id):
+    orders = json.loads(request.user.profile.orders)
+    order = next(order for order in orders if order['order_id'] == order_id)
+    order['date_posted'] = parse_datetime(order['date_posted'])
+
+    context = {
+        'order': order,
+    }
+    return render(request, 'menu/confirmation.html', context)
