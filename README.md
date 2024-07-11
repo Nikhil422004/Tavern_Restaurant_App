@@ -19,6 +19,7 @@ Tavern is a web application designed to manage a restaurant menu, allow users to
 - View Cart and Total Cost
 - Confirm Orders
 - View Order Confirmation Details
+- Responsice Design
 
 ## Technologies Used
 
